@@ -24,6 +24,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Michael Lieshoff
@@ -50,8 +51,11 @@ public class Recording {
     private long endTime;
 
     @XmlElement(name = "metadata")
-    private MetaData metaData;
-
+    @XmlJavaTypeAdapter(XmlToMetaAdapter.class)
+    private Meta metaData;
+    //change to Meta, add @XmlJavaTypeAdapter
+    // private MetaData metaData; 
+    
     @XmlElement(name = "playback")
     private Playback playback;
 
@@ -103,11 +107,11 @@ public class Recording {
         this.endTime = endTime;
     }
 
-    public MetaData getMetaData() {
+    public Meta getMetaData() {
         return metaData;
     }
 
-    public void setMetaData(MetaData metaData) {
+    public void setMetaData(Meta metaData) {
         this.metaData = metaData;
     }
 

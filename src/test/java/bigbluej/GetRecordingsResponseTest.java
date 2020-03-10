@@ -70,7 +70,7 @@ public class GetRecordingsResponseTest {
 
     @Before
     public void setUp() {
-        getRecordingsResponse = JAXB.unmarshal(new StringReader(XML), GetRecordingsResponse.class);
+        getRecordingsResponse = Client.fromXml(GetRecordingsResponse.class, XML);
     }
 
     @Test
@@ -115,32 +115,32 @@ public class GetRecordingsResponseTest {
 
     @Test
     public void shouldHasMetaDataTitle() {
-        assertEquals("Test Recording", getRecordingsResponse.getRecordings().get(0).getMetaData().getTitle());
+        assertEquals("Test Recording", getRecordingsResponse.getRecordings().get(0).getMetaData().get("title"));
     }
 
     @Test
     public void shouldHasMetaDataSubject() {
-        assertEquals("English 232 session", getRecordingsResponse.getRecordings().get(0).getMetaData().getSubject());
+        assertEquals("English 232 session", getRecordingsResponse.getRecordings().get(0).getMetaData().get("subject"));
     }
 
     @Test
     public void shouldHasMetaDataDescription() {
-        assertEquals("First Class", getRecordingsResponse.getRecordings().get(0).getMetaData().getDescription());
+        assertEquals("First Class", getRecordingsResponse.getRecordings().get(0).getMetaData().get("description"));
     }
 
     @Test
     public void shouldHasMetaDataCreator() {
-        assertEquals("Fred Dixon", getRecordingsResponse.getRecordings().get(0).getMetaData().getCreator());
+        assertEquals("Fred Dixon", getRecordingsResponse.getRecordings().get(0).getMetaData().get("creator"));
     }
 
     @Test
     public void shouldHasMetaDataContributor() {
-        assertEquals("Richard Alam", getRecordingsResponse.getRecordings().get(0).getMetaData().getContributor());
+        assertEquals("Richard Alam", getRecordingsResponse.getRecordings().get(0).getMetaData().get("contributor"));
     }
 
     @Test
     public void shouldHasMetaDataLanguage() {
-        assertEquals("en_US", getRecordingsResponse.getRecordings().get(0).getMetaData().getLanguage());
+        assertEquals("en_US", getRecordingsResponse.getRecordings().get(0).getMetaData().get("language"));
     }
 
     @Test

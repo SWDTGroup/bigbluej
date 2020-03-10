@@ -201,7 +201,7 @@ public class BigBlueJIntegrationTest {
                 .build();
         EndResponse endResponse = api.end(endCommand);
         assertEquals("sentEndMeetingRequest", endResponse.getMessageKey());
-        assertEquals("A request to end the meeting was sent.  Please wait a few seconds, and then use the getMeetingInfo or isMeetingRunning API calls to verify that it was ended.", endResponse.getMessage());
+        assertEquals("A request to end the meeting was sent. Please wait a few seconds, and then use the getMeetingInfo or isMeetingRunning API calls to verify that it was ended.", endResponse.getMessage());
         assertEquals(ReturnCode.SUCCESS, endResponse.getReturnCode());
     }
 

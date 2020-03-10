@@ -19,6 +19,7 @@ package bigbluej;
 
 import bigbluej.config.Config;
 import bigbluej.exception.ClientException;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -26,6 +27,16 @@ import org.apache.commons.lang.Validate;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlElementDecl;
+import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
+import javax.xml.transform.stream.StreamSource;
+
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -65,11 +76,20 @@ public class Client {
         }
     }
 
-    private <T> T fromXml(Class<T> clazz, String input) {
+    public static <T> T fromXml(Class<T> clazz, String input) {
         System.out.println("xml> " + input);
-        return JAXB.unmarshal(new StringReader(input), clazz);
+      // return JAXB.unmarshal(new StringReader(input), clazz);
+    	try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(clazz, ObjectFactory.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+ 
+			return  (T) unmarshaller.unmarshal(new StreamSource(new StringReader(input)), clazz).getValue();
+		} catch (JAXBException e) {
+			return null;
+		}
     }
-
+    
+  
     static String toQuery(SortedMap<String, Object> sortedParameterMap) throws UnsupportedEncodingException {
         Validate.notNull(sortedParameterMap);
         StringBuilder s = new StringBuilder();

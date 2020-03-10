@@ -36,7 +36,10 @@ public class MeetingResponse extends Response {
     @XmlElement(name = "meetingID")
     private String meetingID;
 
-    @XmlElement(name = "attendeePW")
+    @XmlElement(name = "internalMeetingID")
+    private String internalMeetingID;
+
+	@XmlElement(name = "attendeePW")
     private String attendeePW;
 
     @XmlElement(name = "moderatorPW")
@@ -135,5 +138,13 @@ public class MeetingResponse extends Response {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+	public String getInternalMeetingID() {
+		return internalMeetingID;
+	}
+
+	public void setInternalMeetingID(String internalMeetingID) {
+		this.internalMeetingID = internalMeetingID;
+	}
 
 }

@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.util.List;
 
 /**
@@ -78,6 +80,10 @@ public class GetMeetingInfoResponse extends Response {
     @XmlElementWrapper(name = "attendees")
     @XmlElement(name = "attendee")
     private List<Attendee> attendees;
+    
+    @XmlElement(name = "metadata")
+    @XmlJavaTypeAdapter(XmlToMetaAdapter.class)
+    private Meta metaData;
 
     public String getMeetingName() {
         return meetingName;
