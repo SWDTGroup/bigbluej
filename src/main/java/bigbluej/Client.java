@@ -78,15 +78,7 @@ public class Client {
 
     public static <T> T fromXml(Class<T> clazz, String input) {
         System.out.println("xml> " + input);
-      // return JAXB.unmarshal(new StringReader(input), clazz);
-    	try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(clazz, ObjectFactory.class);
-			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
- 
-			return  (T) unmarshaller.unmarshal(new StreamSource(new StringReader(input)), clazz).getValue();
-		} catch (JAXBException e) {
-			return null;
-		}
+       return JAXB.unmarshal(new StringReader(input), clazz);
     }
     
   
