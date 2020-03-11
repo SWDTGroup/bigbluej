@@ -44,6 +44,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedMap;
 
 /**
@@ -66,7 +67,7 @@ public class Client {
     public MeetingResponse createMeeting(CreateCommand createCommand) {
         try {
             Validate.notNull(createCommand);
-            String query = toQuery(ReflectionUtils.getFieldsAndValuesInSortedMap(createCommand));
+            String query = toQuery(fixMetas(ReflectionUtils.getFieldsAndValuesInSortedMap(createCommand)));
             String checksum = Checksum.create("create", query, sharedSecret);
             String completeUrl = url + "/create?" + query + "&checksum=" + checksum;
             Crawler crawler = crawlerFactory.createCrawler();
@@ -111,6 +112,22 @@ public class Client {
         }
     }
 
+    private SortedMap<String, Object> fixMetas(SortedMap<String, Object> maps) {
+    	SortedMap<String, String> metas = (SortedMap<String, String>) maps.get("metas");
+    	if(metas!=null )
+    	{
+    		if(metas.isEmpty())
+    			metas.remove("metas");
+    		else
+    		{
+    			for (Entry<String, String> entry : metas.entrySet()) {
+    				maps.put("meta-"+entry.getKey(), entry.getValue());
+				}
+    		}
+    	}
+    	return maps;
+    }
+    
     private String toXml(ModulesCommand modulesCommand) {
         Modules modules = new Modules();
         modules.setModules(new ArrayList<Module>());

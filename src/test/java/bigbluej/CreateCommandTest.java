@@ -24,6 +24,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.TreeMap;
+
 /**
  * @author Michael Lieshoff
  */
@@ -106,8 +108,10 @@ public class CreateCommandTest {
     }
 
     @Test
-    public void shouldBuildWithMeta() {
-        assertEquals("my-meta", meetingWithId().meta("my-meta").build().getMeta());
+    public void shouldBuildWithMetas() {
+    	TreeMap<String, String> _metas = new TreeMap<String, String>();
+    	_metas.put("my-meta", "my-meta-value");
+        assertEquals("my-meta-value", meetingWithId().metas(_metas).build().getMetas().get("my-meta"));
     }
 
 }

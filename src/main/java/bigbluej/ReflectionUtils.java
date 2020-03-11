@@ -38,7 +38,7 @@ public class ReflectionUtils {
             field.setAccessible(true);
             String name = field.getName();
             Object value = field.get(object);
-            if (!field.isSynthetic() && value != null) {
+            if (!field.isSynthetic()  && value != null) {
                 fieldAndValues.put(name, value);
             }
         }

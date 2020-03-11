@@ -1,5 +1,10 @@
 package bigbluej;
 
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -35,10 +40,10 @@ public class CreateCommand {
     private final String logoutURL;
     private final boolean record;
     private final int duration;
-    private final String meta;
-
+    private final SortedMap<String, String> metas;
+    
     private CreateCommand(String name, String meetingID, String attendeePW, String moderatorPW, String welcome, String dialNumber, String voiceBridge,
-            String webVoice, String logoutURL, boolean record, int duration, String meta) {
+            String webVoice, String logoutURL, boolean record, int duration, SortedMap<String, String>  metas) {
         Validate.notEmpty(meetingID);
         this.name = name;
         this.meetingID = meetingID;
@@ -51,7 +56,7 @@ public class CreateCommand {
         this.logoutURL = logoutURL;
         this.record = record;
         this.duration = duration;
-        this.meta = meta;
+        this.metas = metas;
     }
 
     public static Builder builder() {
@@ -102,11 +107,15 @@ public class CreateCommand {
         return duration;
     }
 
-    public String getMeta() {
-        return meta;
-    }
+ 
 
-    public static class Builder {
+    public SortedMap<String, String> getMetas() {
+		return metas;
+	}
+
+
+
+	public static class Builder {
 
         private String name;
         private String meetingID;
@@ -119,14 +128,14 @@ public class CreateCommand {
         private String logoutURL;
         private boolean record;
         private int duration;
-        private String meta;
+        private SortedMap<String, String>  metas;
 
         private Builder() {
         }
 
         public CreateCommand build() {
             return new CreateCommand(name, meetingID, attendeePW, moderatorPW, welcome, dialNumber, voiceBridge, webVoice, logoutURL, record,
-                    duration, meta);
+                    duration, metas);
         }
 
         public Builder name(String name) {
@@ -184,8 +193,8 @@ public class CreateCommand {
             return this;
         }
 
-        public Builder meta(String meta) {
-            this.meta = meta;
+        public Builder metas(SortedMap<String, String>  metas) {
+            this.metas = metas;
             return this;
         }
 

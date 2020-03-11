@@ -24,6 +24,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Michael Lieshoff
@@ -57,6 +58,11 @@ public class Meeting {
 
     @XmlElement(name = "running")
     private boolean running;
+    
+    
+    @XmlElement(name = "metadata")
+    @XmlJavaTypeAdapter(XmlToMetaAdapter.class)
+    private Meta metaData;
 
     public String getMeetingID() {
         return meetingID;
@@ -144,5 +150,13 @@ public class Meeting {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+	public Meta getMetaData() {
+		return metaData;
+	}
+
+	public void setMetaData(Meta metaData) {
+		this.metaData = metaData;
+	}
 
 }
