@@ -67,7 +67,7 @@ public class Client {
     public MeetingResponse createMeeting(CreateCommand createCommand) {
         try {
             Validate.notNull(createCommand);
-            String query = toQuery(fixMetas(ReflectionUtils.getFieldsAndValuesInSortedMap(createCommand)));
+            String query = toQuery(fixMetaData(ReflectionUtils.getFieldsAndValuesInSortedMap(createCommand)));
             String checksum = Checksum.create("create", query, sharedSecret);
             String completeUrl = url + "/create?" + query + "&checksum=" + checksum;
             Crawler crawler = crawlerFactory.createCrawler();
@@ -99,7 +99,7 @@ public class Client {
     public MeetingResponse createMeeting(CreateCommand createCommand, ModulesCommand modulesCommand) {
         try {
             Validate.notNull(createCommand);
-            String query = toQuery(ReflectionUtils.getFieldsAndValuesInSortedMap(createCommand));
+            String query = toQuery(fixMetaData(ReflectionUtils.getFieldsAndValuesInSortedMap(createCommand)));
             String checksum = Checksum.create("create", query, sharedSecret);
             String completeUrl = url + "/create?" + query + "&checksum=" + checksum;
             System.out.println("url> " + completeUrl);
@@ -112,19 +112,15 @@ public class Client {
         }
     }
 
-    private SortedMap<String, Object> fixMetas(SortedMap<String, Object> maps) {
-    	SortedMap<String, String> metas = (SortedMap<String, String>) maps.get("metas");
-    	if(metas!=null )
+    private SortedMap<String, Object> fixMetaData(SortedMap<String, Object> maps) {
+    	Meta metaData = (Meta) maps.get("metaData");
+    	if(metaData!=null )
     	{
-    		if(metas.isEmpty())
-    			metas.remove("metas");
-    		else
-    		{
-    			for (Entry<String, String> entry : metas.entrySet()) {
-    				maps.put("meta-"+entry.getKey(), entry.getValue());
-				}
-    		}
-    	}
+			for (JAXBElement<String> ele : metaData.getElements()) {
+				maps.put("meta_"+ele.getName().getLocalPart(), ele.getValue());
+				maps.remove("metaData");
+			}
+	}
     	return maps;
     }
     

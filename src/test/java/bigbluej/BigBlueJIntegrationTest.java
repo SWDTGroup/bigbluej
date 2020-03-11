@@ -205,7 +205,7 @@ public class BigBlueJIntegrationTest {
         assertEquals(ReturnCode.SUCCESS, endResponse.getReturnCode());
     }
 
-    @Test
+   // @Test
     public void shouldGetMeetings() throws Exception {
         GetMeetingsResponse getMeetingsResponse = api.getMeetings();
         assertEquals(ReturnCode.SUCCESS, getMeetingsResponse.getReturnCode());

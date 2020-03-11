@@ -109,9 +109,9 @@ public class CreateCommandTest {
 
     @Test
     public void shouldBuildWithMetas() {
-    	TreeMap<String, String> _metas = new TreeMap<String, String>();
-    	_metas.put("my-meta", "my-meta-value");
-        assertEquals("my-meta-value", meetingWithId().metas(_metas).build().getMetas().get("my-meta"));
+    	Meta metaData= new Meta();
+    	metaData.put("my-meta", "my-meta-value");
+        assertEquals("my-meta-value", meetingWithId().metaData(metaData).build().getMetaData().get("my-meta"));
     }
 
 }

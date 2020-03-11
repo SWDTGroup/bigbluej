@@ -40,10 +40,10 @@ public class CreateCommand {
     private final String logoutURL;
     private final boolean record;
     private final int duration;
-    private final SortedMap<String, String> metas;
+    private final Meta metaData;
     
     private CreateCommand(String name, String meetingID, String attendeePW, String moderatorPW, String welcome, String dialNumber, String voiceBridge,
-            String webVoice, String logoutURL, boolean record, int duration, SortedMap<String, String>  metas) {
+            String webVoice, String logoutURL, boolean record, int duration, Meta  metaData) {
         Validate.notEmpty(meetingID);
         this.name = name;
         this.meetingID = meetingID;
@@ -56,8 +56,9 @@ public class CreateCommand {
         this.logoutURL = logoutURL;
         this.record = record;
         this.duration = duration;
-        this.metas = metas;
+        this.metaData = metaData;
     }
+     
 
     public static Builder builder() {
         return new Builder();
@@ -107,11 +108,11 @@ public class CreateCommand {
         return duration;
     }
 
- 
 
-    public SortedMap<String, String> getMetas() {
-		return metas;
+	public Meta getMetaData() {
+		return metaData;
 	}
+
 
 
 
@@ -128,14 +129,14 @@ public class CreateCommand {
         private String logoutURL;
         private boolean record;
         private int duration;
-        private SortedMap<String, String>  metas;
+        private Meta  metaData;
 
         private Builder() {
         }
 
         public CreateCommand build() {
             return new CreateCommand(name, meetingID, attendeePW, moderatorPW, welcome, dialNumber, voiceBridge, webVoice, logoutURL, record,
-                    duration, metas);
+                    duration, metaData);
         }
 
         public Builder name(String name) {
@@ -193,8 +194,8 @@ public class CreateCommand {
             return this;
         }
 
-        public Builder metas(SortedMap<String, String>  metas) {
-            this.metas = metas;
+        public Builder metaData(Meta  metaData) {
+            this.metaData = metaData;
             return this;
         }
 
